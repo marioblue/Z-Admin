@@ -1,7 +1,5 @@
 <div id="sidebar" class="sidebar                  responsive                    ace-save-state">
-    <script type="text/javascript">
-        try{ace.settings.loadState('sidebar')}catch(e){}
-    </script>
+    
 
     <div class="sidebar-shortcuts hide" id="sidebar-shortcuts">
         <div class="sidebar-shortcuts-large " id="sidebar-shortcuts-large">
@@ -57,7 +55,7 @@
 
             <ul class="submenu">
                 <li  class="active" >
-                    <a href="/ad-list">
+                    <a href="/ad-list#/">
                         <i class="menu-icon fa fa-caret-right"></i>
                         广告位列表
                     </a>

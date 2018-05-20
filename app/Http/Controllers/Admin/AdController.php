@@ -14,8 +14,8 @@ class AdController extends Controller
     public function getAdList(){
     	return response()->json([
     		'list'=>[
-    			['c1'=>'ccc'],
-    			['c2'=>'xxx'],
+    			['c1'=>'code1','c2'=>'title','c3'=>'sort','c4'=>'pic','c5'=>time(),'c6'=>'state'],
+    			['c1'=>'code2','c2'=>'title','c3'=>'sort','c4'=>'pic','c5'=>time(),'c6'=>'state'],
     		],
     	]);
     }
