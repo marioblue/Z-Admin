@@ -16,4 +16,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 	.extract(['vue','axios','popper.js','lodash'])
 	.sass('resources/assets/sass/app.scss', 'public/css');
 
+if (mix.inProduction()) {
+    mix.version();
+}
+
 

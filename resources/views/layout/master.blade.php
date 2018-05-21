@@ -175,8 +175,8 @@
 
 <script src="/layer/layer.js"></script>
 
-<script type="text/javascript" src="js/manifest.js"></script>
-<script type="text/javascript" src="js/vendor.js"></script>
+<script type="text/javascript" src="{{ mix('js/manifest.js') }}"></script>
+<script type="text/javascript" src="{{ mix('js/vendor.js') }}"></script>
 @yield('script')
 
 <!-- ace scripts -->

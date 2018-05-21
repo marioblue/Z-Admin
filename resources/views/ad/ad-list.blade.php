@@ -31,5 +31,5 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" src="js/adList.js"></script>
+    <script type="text/javascript" src="{{ mix('js/adList.js') }}"></script>
 @endsection
