@@ -63,6 +63,15 @@
                     <b class="arrow"></b>
                 </li>
 
+                <li>
+                    <a href="/ad-list#/adListV2">
+                        <i class="menu-icon fa fa-caret-right"></i>
+                        广告位列表V2
+                    </a>
+
+                    <b class="arrow"></b>
+                </li>
+
             </ul>
         </li>
 

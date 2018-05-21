@@ -32,4 +32,7 @@
 
 @section('script')
     <script type="text/javascript" src="{{ mix('js/adList.js') }}"></script>
+    <script type="text/javascript">
+        
+    </script>
 @endsection
