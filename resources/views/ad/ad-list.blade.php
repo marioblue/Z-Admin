@@ -33,6 +33,14 @@
 @section('script')
     <script type="text/javascript" src="{{ mix('js/adList.js') }}"></script>
     <script type="text/javascript">
-        
+        jQuery(function ($){
+            var currentHref = window.location.pathname + window.location.hash;
+            $('.nav-list ul.submenu li').removeClass('active');
+            $('a[href="'+currentHref+'"]').parent().addClass('active');
+            $('.nav-list ul.submenu li').on('click',function(){
+                $('.nav-list ul.submenu li').removeClass('active');
+                $(this).addClass('active');
+            })
+        })
     </script>
 @endsection
