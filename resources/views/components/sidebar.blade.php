@@ -44,7 +44,7 @@
 
 
         <li   class="active open"  >
-            <a href="#" class="dropdown-toggle">
+            <a href="javascript:;" class="dropdown-toggle">
                 <i class="menu-icon fa fa-list"></i>
                 <span class="menu-text"> 广告位管理</span>
 
@@ -54,7 +54,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-                <li  class="active" >
+                <li  class="" >
                     <a href="/ad-list#/">
                         <i class="menu-icon fa fa-caret-right"></i>
                         广告位列表
