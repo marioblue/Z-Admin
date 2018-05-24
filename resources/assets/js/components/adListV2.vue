@@ -104,7 +104,9 @@
                 }
             })
             .then(function (response) {
-                that.adList = response.data.list;
+                var pageData = response.data.data;
+                that.adList = pageData.list;
+                that.adPage = pageData;
             })
             .catch(function (error) {
                 console.log(error);

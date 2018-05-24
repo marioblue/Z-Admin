@@ -3149,21 +3149,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            adList: [{
-                c1: 'c1', c2: 'c2', c3: 'c3', c4: 'c4', c5: 'c5', 'c6': 'c6', c7: 'c7'
-            }, {
-                c1: 'c1', c2: 'c2', c3: 'c3', c4: 'c4', c5: 'c5', 'c6': 'c6', c7: 'c7'
-            }, {
-                c1: 'c1', c2: 'c2', c3: 'c3', c4: 'c4', c5: 'c5', 'c6': 'c6', c7: 'c7'
-            }, {
-                c1: 'c1', c2: 'c2', c3: 'c3', c4: 'c4', c5: 'c5', 'c6': 'c6', c7: 'c7'
-            }, {
-                c1: 'c2341', c2: 'c2342', c3: 'c2343', c4: 'c2344', c5: 'c2345', c6: 'c2346', c7: 'c2347'
-            }],
+            adList: [],
+            adPage: {},
             message: '我要吃鸡'
 
         };
@@ -3175,7 +3200,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ID: 12345
             }
         }).then(function (response) {
-            that.adList = response.data.list;
+            var pageData = response.data.data;
+            that.adList = pageData.list;
+            that.adPage = pageData;
         }).catch(function (error) {
             console.log(error);
         });
@@ -3190,7 +3217,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 content: $('#layer1'),
                 maxmin: true
             });
-            $('#layer1').removeClass('hide');
+            // $('#layer1').removeClass('hide');
         },
         openLayer2: function openLayer2(event) {
             layer.open({
@@ -3200,7 +3227,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 content: $('#layer2'),
                 maxmin: true
             });
-            $('#layer2').removeClass('hide');
+            // $('#layer2').removeClass('hide');
         }
     }
 });
@@ -3262,73 +3289,258 @@ var render = function() {
                 })
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          _vm.adPage && _vm.adPage.totalPage > 0
+            ? _c(
+                "div",
+                { staticClass: "pagingBar" },
+                [
+                  _c("span", { staticClass: "disabled" }, [
+                    _vm._v("共"),
+                    _c("em", [_vm._v(_vm._s(_vm.adPage.total))]),
+                    _vm._v("条")
+                  ]),
+                  _vm._v(" "),
+                  _vm.adPage.first == true
+                    ? _c("span", { staticClass: "disabled" }, [_vm._v("首页")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.adPage.first == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.PageQuery(1),
+                              expression: "PageQuery(1)"
+                            }
+                          ],
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("首页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.adPage.first == true
+                    ? _c("span", { staticClass: "disabled" }, [
+                        _vm._v("上一页")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.adPage.first == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.PageQuery(_vm.adPage.previousIndex),
+                              expression: "PageQuery(adPage.previousIndex)"
+                            }
+                          ],
+                          staticClass: "pagiv-prev",
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("上一页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.adPage.betweenInd, function(link) {
+                    return _c("em", [
+                      link != _vm.adPage.pageIndex
+                        ? _c(
+                            "a",
+                            {
+                              directives: [
+                                {
+                                  name: "click",
+                                  rawName: "v-click",
+                                  value: _vm.PageQuery(link),
+                                  expression: "PageQuery(link)"
+                                }
+                              ],
+                              staticClass: "pagiv-number",
+                              attrs: { href: "javascript:void(0)" }
+                            },
+                            [_vm._v(_vm._s(link))]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      link == _vm.adPage.pageIndex
+                        ? _c("span", { staticClass: "cur v-binding v-scope" }, [
+                            _vm._v(_vm._s(link))
+                          ])
+                        : _vm._e()
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _vm.adPage.last == true
+                    ? _c("span", { staticClass: "disabled" }, [
+                        _vm._v("下一页")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.adPage.last == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.PageQuery(_vm.adPage.nextIndex),
+                              expression: "PageQuery(adPage.nextIndex)"
+                            }
+                          ],
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("下一页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.adPage.last == true
+                    ? _c("span", { staticClass: "disabled" }, [_vm._v("尾页")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.adPage.last == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.PageQuery(_vm.adPage.totalPage),
+                              expression: "PageQuery(adPage.totalPage)"
+                            }
+                          ],
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("尾页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "disable" }, [
+                    _vm._v(
+                      _vm._s(_vm.adPage.pageIndex) +
+                        " / " +
+                        _vm._s(_vm.adPage.totalPage)
+                    )
+                  ])
+                ],
+                2
+              )
+            : _vm._e()
         ])
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xs-12 hide", attrs: { id: "layer1" } }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-xs-12" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-xs-12" }, [
-                _vm._m(4),
-                _vm._v(" "),
-                _vm._m(5),
-                _vm._v(" "),
-                _c("div", [
-                  _c(
-                    "table",
-                    {
-                      staticClass:
-                        "table table-striped table-bordered table-hover",
-                      attrs: { id: "dynamic-table" }
-                    },
-                    [
-                      _vm._m(6),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.adList, function(item, index) {
-                          return _c("tr", [
-                            _vm._m(7, true),
+      _c(
+        "div",
+        {
+          staticClass: "col-xs-12",
+          staticStyle: { display: "none" },
+          attrs: { id: "layer1" }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-xs-12" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xs-12" }, [
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-striped table-bordered table-hover",
+                        attrs: { id: "dynamic-table" }
+                      },
+                      [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          [
+                            _vm._l(_vm.adList, function(item, index) {
+                              return _c("tr", [
+                                _vm._m(7, true),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c1))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c2))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c3))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c4))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c5))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c6))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "javascript:;" },
+                                      on: { click: _vm.openLayer2 }
+                                    },
+                                    [_vm._v("操作")]
+                                  )
+                                ])
+                              ])
+                            }),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.c1))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.c2))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.c3))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.c4))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.c5))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.c6))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  attrs: { href: "javascript:;" },
-                                  on: { click: _vm.openLayer2 }
-                                },
-                                [_vm._v("操作")]
-                              )
-                            ])
-                          ])
-                        })
-                      )
-                    ]
-                  )
+                            _vm._l(_vm.adList, function(item, index) {
+                              return _c("tr", [
+                                _vm._m(8, true),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c1))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c2))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c3))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c4))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c5))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.c6))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "a",
+                                    {
+                                      attrs: { href: "javascript:;" },
+                                      on: { click: _vm.openLayer2 }
+                                    },
+                                    [_vm._v("操作")]
+                                  )
+                                ])
+                              ])
+                            })
+                          ],
+                          2
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ])
             ])
           ])
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
-      _vm._m(8)
+      _vm._m(9)
     ])
   ])
 }
@@ -3543,9 +3755,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "center" }, [
+      _c("label", { staticClass: "pos-rel" }, [
+        _c("input", { staticClass: "ace", attrs: { type: "checkbox" } }),
+        _vm._v(" "),
+        _c("span", { staticClass: "lbl" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "col-xs-12 hide", attrs: { id: "layer2" } },
+      {
+        staticClass: "col-xs-12",
+        staticStyle: { display: "none" },
+        attrs: { id: "layer2" }
+      },
       [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-xs-12" }, [
@@ -3728,7 +3956,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 ID: 12345
             }
         }).then(function (response) {
-            that.adList = response.data.list;
+            var pageData = response.data.data;
+            that.adList = pageData.list;
+            that.adPage = pageData;
         }).catch(function (error) {
             console.log(error);
         });

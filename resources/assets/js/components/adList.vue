@@ -78,12 +78,28 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="pagingBar" v-if="adPage && adPage.totalPage>0">
+                        <span class="disabled">共<em>{{adPage.total}}</em>条</span>
+                        <span v-if="adPage.first==true" class="disabled">首页</span>
+                        <a href="javascript:void(0)" v-if="adPage.first==false" v-click="PageQuery(1)">首页</a>
+                        <span v-if="adPage.first==true" class="disabled">上一页</span>
+                        <a href="javascript:void(0)" v-if="adPage.first==false" v-click="PageQuery(adPage.previousIndex)" class="pagiv-prev">上一页</a>
+                        <em v-for="link in adPage.betweenInd">
+                            <a v-if="link != adPage.pageIndex" href="javascript:void(0)" v-click="PageQuery(link)" class="pagiv-number">{{link}}</a>
+                            <span v-if="link == adPage.pageIndex" class="cur v-binding v-scope">{{link}}</span>
+                        </em>
+                        <span v-if="adPage.last==true" class="disabled">下一页</span>
+                        <a href="javascript:void(0)" v-if="adPage.last==false" v-click="PageQuery(adPage.nextIndex)">下一页</a>
+                        <span v-if="adPage.last==true" class="disabled">尾页</span>
+                        <a href="javascript:void(0)" v-if="adPage.last==false" v-click="PageQuery(adPage.totalPage)">尾页</a>
+                        <span class="disable">{{adPage.pageIndex}} / {{adPage.totalPage}}</span>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="row">
-            <div class="col-xs-12 hide" id="layer1">
+            <div class="col-xs-12" id="layer1" style="display: none;">
                 <div class="row">
                     <div class="col-xs-12">
                         
@@ -161,16 +177,34 @@
                                                     <a href="javascript:;" v-on:click="openLayer2">操作</a>
                                                 </td>
                                             </tr>
+                                            <tr v-for="(item,index) in adList">
+                                                <td class="center">
+                                                    <label class="pos-rel">
+                                                        <input type="checkbox" class="ace"/>
+                                                        <span class="lbl"></span>
+                                                    </label>
+                                                </td>
+                                                <td>{{item.c1}}</td>
+                                                <td>{{item.c2}}</td>
+                                                <td>{{item.c3}}</td>
+                                                <td>{{item.c4}}</td>
+                                                <td>{{item.c5}}</td>
+                                                <td>{{item.c6}}</td>
+                                                <td>
+                                                    <a href="javascript:;" v-on:click="openLayer2">操作</a>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
+                                
                             </div>
                         </div>
                         
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 hide" id="layer2">
+            <div class="col-xs-12" id="layer2" style="display: none;">
                 <div class="row">
                     <div class="col-xs-12">
                         
@@ -194,22 +228,9 @@
         data(){
             return {
                 adList:[
-                    {
-                        c1:'c1',c2:'c2',c3:'c3',c4:'c4',c5:'c5','c6':'c6',c7:'c7'
-                    },
-                    {
-                        c1:'c1',c2:'c2',c3:'c3',c4:'c4',c5:'c5','c6':'c6',c7:'c7'
-                    },
-                    {
-                        c1:'c1',c2:'c2',c3:'c3',c4:'c4',c5:'c5','c6':'c6',c7:'c7'
-                    }
-                    ,{
-                        c1:'c1',c2:'c2',c3:'c3',c4:'c4',c5:'c5','c6':'c6',c7:'c7'
-                    },
-                    {
-                        c1:'c2341',c2:'c2342',c3:'c2343',c4:'c2344',c5:'c2345',c6:'c2346',c7:'c2347'
-                    }
+                    
                 ],
+                adPage:{},
                 message:'我要吃鸡',
 
             }
@@ -223,7 +244,9 @@
                 }
             })
             .then(function (response) {
-                that.adList = response.data.list;
+                var pageData = response.data.data;
+                that.adList = pageData.list;
+                that.adPage = pageData;
             })
             .catch(function (error) {
                 console.log(error);
@@ -238,7 +261,7 @@
                   content: $('#layer1'),
                   maxmin:true
                 });
-                $('#layer1').removeClass('hide');
+                // $('#layer1').removeClass('hide');
             },
             openLayer2:function(event){
                 layer.open({
@@ -248,7 +271,7 @@
                   content: $('#layer2'),
                   maxmin:true
                 });
-                $('#layer2').removeClass('hide');
+                // $('#layer2').removeClass('hide');
             }
         },
     }
