@@ -78,6 +78,22 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="pagingBar" v-if="pageData && pageData.totalPages>0">
+                        <span class="disabled">共<em>{{pageData.totalElements}}</em>条</span> 
+                        <span v-if="pageData.first==true" class="disabled">首页</span> 
+                        <a href="javascript:void(0)" v-if="pageData.first==false" v-click="pageQuery(1)">首页</a> 
+                        <span v-if="pageData.first==true" class="disabled">上一页</span> 
+                        <a href="javascript:void(0)" v-if="pageData.first==false" v-click="pageQuery(pageData.previousIndex)" class="pagiv-prev">上一页</a>
+                        <em v-for="link in pageData.linkNumbers"> 
+                            <a v-if="link != pageData.pageIndex" href="javascript:void(0)" v-click="pageQuery(link)" class="pagiv-number">{{link}}</a> 
+                            <span v-if="link == pageData.pageIndex" class="cur">{{link}}</span>
+                        </em> 
+                        <span v-if="pageData.last==true" class="disabled">下一页</span> 
+                        <a href="javascript:void(0)" v-if="pageData.last==false" v-click="pageQuery(pageData.nextIndex)">下一页</a> 
+                        <span v-if="pageData.last==true" class="disabled">尾页</span> 
+                        <a href="javascript:void(0)" v-if="pageData.last==false" v-click="pageQuery(pageData.totalPages)">尾页</a> 
+                        <span class="disable">{{pageData.pageIndex}} / {{pageData.totalPages}}</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -91,29 +107,33 @@
         data(){
             return {
                 adList:[],
+                pageData:{},
                 message:'大吉大利',
 
             }
         },
         mounted(){
             var that = this;
-            axios.get('/ad/getAdList', 
-            {
-                params: {
-                    ID: 12345
-                }
-            })
-            .then(function (response) {
-                var pageData = response.data.data;
-                that.adList = pageData.list;
-                that.adPage = pageData;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+            pageQuery(1);
         },
         methods:{
-            
+            pageQuery:function(idx){
+                var that=this;
+                axios.get('/ad/getAdList', 
+                {
+                    params: {
+                        ID: 12345
+                    }
+                })
+                .then(function (response) {
+                    that.pageData = response.data.data;
+                    that.adList = pageData.list;
+                    adminHelper.setPagination(that.pageData);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
         },
     }
 </script>
