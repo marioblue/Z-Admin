@@ -78,22 +78,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="pagingBar" v-if="adPage && adPage.totalPage>0">
-                        <span class="disabled">共<em>{{adPage.total}}</em>条</span>
-                        <span v-if="adPage.first==true" class="disabled">首页</span>
-                        <a href="javascript:void(0)" v-if="adPage.first==false" v-click="PageQuery(1)">首页</a>
-                        <span v-if="adPage.first==true" class="disabled">上一页</span>
-                        <a href="javascript:void(0)" v-if="adPage.first==false" v-click="PageQuery(adPage.previousIndex)" class="pagiv-prev">上一页</a>
-                        <em v-for="link in adPage.betweenInd">
-                            <a v-if="link != adPage.pageIndex" href="javascript:void(0)" v-click="PageQuery(link)" class="pagiv-number">{{link}}</a>
-                            <span v-if="link == adPage.pageIndex" class="cur v-binding v-scope">{{link}}</span>
-                        </em>
-                        <span v-if="adPage.last==true" class="disabled">下一页</span>
-                        <a href="javascript:void(0)" v-if="adPage.last==false" v-click="PageQuery(adPage.nextIndex)">下一页</a>
-                        <span v-if="adPage.last==true" class="disabled">尾页</span>
-                        <a href="javascript:void(0)" v-if="adPage.last==false" v-click="PageQuery(adPage.totalPage)">尾页</a>
-                        <span class="disable">{{adPage.pageIndex}} / {{adPage.totalPage}}</span>
-                    </div>
+                    <pagination v-bind:pageData="pageData" @pageQuery="pageQuery"></pagination>
                 </div>
             </div>
         </div>
@@ -224,12 +209,15 @@
 </template>
 
 <script>
+    import pagination from './common/pagination.vue';
     export default {
+        components: {pagination},
         data(){
             return {
                 adList:[
                     
                 ],
+                pageData:{},
                 adPage:{},
                 message:'我要吃鸡',
 
@@ -240,13 +228,13 @@
             axios.get('/ad/getAdList', 
             {
                 params: {
-                    ID: 12345
+                    pageIndex: 1
                 }
             })
             .then(function (response) {
-                var pageData = response.data.data;
-                that.adList = pageData.list;
-                that.adPage = pageData;
+                that.pageData = response.data.data;
+                that.adList = that.pageData.list;
+                adminHelper.setPagination(that.pageData);
             })
             .catch(function (error) {
                 console.log(error);
@@ -272,6 +260,23 @@
                   maxmin:true
                 });
                 // $('#layer2').removeClass('hide');
+            },
+            pageQuery:function(idx){
+                var that=this;
+                axios.get('/ad/getAdList', 
+                {
+                    params: {
+                        pageIndex: idx
+                    }
+                })
+                .then(function (response) {
+                    that.pageData = response.data.data;
+                    that.adList = that.pageData.list;
+                    adminHelper.setPagination(that.pageData);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             }
         },
     }

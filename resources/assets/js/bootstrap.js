@@ -58,8 +58,9 @@ if (token) {
 
 // 项目代码
 window.adminHelper = {
+	// 分页
 	setPagination:function(pageData){
-		var pageIndex = pageData.pageIndex;
+		var pageIndex = parseInt(pageData.pageIndex);
 		var pageSize = pageData.pageSize;
 		var total = pageData.total;
 		// start fix
@@ -97,5 +98,7 @@ window.adminHelper = {
 			linkNumbers.push(i);
 		}
 		pageData.linkNumbers = linkNumbers;
+		pageData.preIndex = pageIndex-1;
+		pageData.nextIndex = pageIndex+1;
 	}
 }
