@@ -149,9 +149,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+	window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+	console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -170,6 +170,50 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+// 项目代码
+window.adminHelper = {
+	setPagination: function setPagination(pageData) {
+		var pageIndex = pageData.pageIndex;
+		var pageSize = pageData.pageSize;
+		var total = pageData.total;
+		// start fix
+		var totalPage = parseInt(total / pageSize);
+		if (total % pageSize > 0) {
+			totalPage = totalPage + 1;
+		}
+		var pageLinkNumber = 6;
+		if (totalPage < pageLinkNumber) {
+			pageLinkNumber = totalPage;
+		}
+
+		var isOdd = pageLinkNumber % 2 == 0;
+		var val = parseInt(pageLinkNumber / 2);
+		var beginIndex = pageIndex - (isOdd ? val - 1 : val);
+		var endIndex = pageIndex + val;
+		if (beginIndex < 1) {
+			beginIndex = 1;
+			endIndex = pageLinkNumber;
+		}
+		if (endIndex > totalPage) {
+			endIndex = totalPage;
+			beginIndex = endIndex - pageLinkNumber + 1;
+		}
+
+		var first = pageIndex == 1;
+		var last = pageIndex == totalPage;
+
+		var linkNumbers = [];
+
+		pageData.totalPage = totalPage;
+		pageData.first = first;
+		pageData.last = last;
+		for (var i = beginIndex; i <= endIndex; i++) {
+			linkNumbers.push(i);
+		}
+		pageData.linkNumbers = linkNumbers;
+	}
+};
 
 /***/ }),
 /* 4 */,
@@ -3712,29 +3756,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             adList: [],
+            pageData: {},
             message: '大吉大利'
 
         };
     },
     mounted: function mounted() {
         var that = this;
-        axios.get('/ad/getAdList', {
-            params: {
-                ID: 12345
-            }
-        }).then(function (response) {
-            that.adList = response.data.list;
-        }).catch(function (error) {
-            console.log(error);
-        });
+        pageQuery(1);
     },
 
-    methods: {}
+    methods: {
+        pageQuery: function pageQuery(idx) {
+            var that = this;
+            axios.get('/ad/getAdList', {
+                params: {
+                    ID: 12345
+                }
+            }).then(function (response) {
+                that.pageData = response.data.data;
+                that.adList = pageData.list;
+                adminHelper.setPagination(that.pageData);
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -3793,7 +3861,152 @@ var render = function() {
                 })
               )
             ]
-          )
+          ),
+          _vm._v(" "),
+          _vm.pageData && _vm.pageData.totalPages > 0
+            ? _c(
+                "div",
+                { staticClass: "pagingBar" },
+                [
+                  _c("span", { staticClass: "disabled" }, [
+                    _vm._v("共"),
+                    _c("em", [_vm._v(_vm._s(_vm.pageData.totalElements))]),
+                    _vm._v("条")
+                  ]),
+                  _vm._v(" "),
+                  _vm.pageData.first == true
+                    ? _c("span", { staticClass: "disabled" }, [_vm._v("首页")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pageData.first == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.pageQuery(1),
+                              expression: "pageQuery(1)"
+                            }
+                          ],
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("首页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pageData.first == true
+                    ? _c("span", { staticClass: "disabled" }, [
+                        _vm._v("上一页")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pageData.first == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.pageQuery(_vm.pageData.previousIndex),
+                              expression: "pageQuery(pageData.previousIndex)"
+                            }
+                          ],
+                          staticClass: "pagiv-prev",
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("上一页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm._l(_vm.pageData.linkNumbers, function(link) {
+                    return _c("em", [
+                      link != _vm.pageData.pageIndex
+                        ? _c(
+                            "a",
+                            {
+                              directives: [
+                                {
+                                  name: "click",
+                                  rawName: "v-click",
+                                  value: _vm.pageQuery(link),
+                                  expression: "pageQuery(link)"
+                                }
+                              ],
+                              staticClass: "pagiv-number",
+                              attrs: { href: "javascript:void(0)" }
+                            },
+                            [_vm._v(_vm._s(link))]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      link == _vm.pageData.pageIndex
+                        ? _c("span", { staticClass: "cur" }, [
+                            _vm._v(_vm._s(link))
+                          ])
+                        : _vm._e()
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _vm.pageData.last == true
+                    ? _c("span", { staticClass: "disabled" }, [
+                        _vm._v("下一页")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pageData.last == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.pageQuery(_vm.pageData.nextIndex),
+                              expression: "pageQuery(pageData.nextIndex)"
+                            }
+                          ],
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("下一页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pageData.last == true
+                    ? _c("span", { staticClass: "disabled" }, [_vm._v("尾页")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.pageData.last == false
+                    ? _c(
+                        "a",
+                        {
+                          directives: [
+                            {
+                              name: "click",
+                              rawName: "v-click",
+                              value: _vm.pageQuery(_vm.pageData.totalPages),
+                              expression: "pageQuery(pageData.totalPages)"
+                            }
+                          ],
+                          attrs: { href: "javascript:void(0)" }
+                        },
+                        [_vm._v("尾页")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "disable" }, [
+                    _vm._v(
+                      _vm._s(_vm.pageData.pageIndex) +
+                        " / " +
+                        _vm._s(_vm.pageData.totalPages)
+                    )
+                  ])
+                ],
+                2
+              )
+            : _vm._e()
         ])
       ])
     ])

@@ -186,9 +186,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+	window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+	console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -207,6 +207,50 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+// 项目代码
+window.adminHelper = {
+	setPagination: function setPagination(pageData) {
+		var pageIndex = pageData.pageIndex;
+		var pageSize = pageData.pageSize;
+		var total = pageData.total;
+		// start fix
+		var totalPage = parseInt(total / pageSize);
+		if (total % pageSize > 0) {
+			totalPage = totalPage + 1;
+		}
+		var pageLinkNumber = 6;
+		if (totalPage < pageLinkNumber) {
+			pageLinkNumber = totalPage;
+		}
+
+		var isOdd = pageLinkNumber % 2 == 0;
+		var val = parseInt(pageLinkNumber / 2);
+		var beginIndex = pageIndex - (isOdd ? val - 1 : val);
+		var endIndex = pageIndex + val;
+		if (beginIndex < 1) {
+			beginIndex = 1;
+			endIndex = pageLinkNumber;
+		}
+		if (endIndex > totalPage) {
+			endIndex = totalPage;
+			beginIndex = endIndex - pageLinkNumber + 1;
+		}
+
+		var first = pageIndex == 1;
+		var last = pageIndex == totalPage;
+
+		var linkNumbers = [];
+
+		pageData.totalPage = totalPage;
+		pageData.first = first;
+		pageData.last = last;
+		for (var i = beginIndex; i <= endIndex; i++) {
+			linkNumbers.push(i);
+		}
+		pageData.linkNumbers = linkNumbers;
+	}
+};
 
 /***/ }),
 
