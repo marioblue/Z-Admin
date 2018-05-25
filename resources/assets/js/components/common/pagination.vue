@@ -1,5 +1,9 @@
 <template>
+        
 	<div class="row" v-if="pageData && pageData.totalPage>0">
+        <div class="hide" data-opt="for fun" v-show="decoratePageData">
+            <span>opp</span>
+        </div>
         <div class="col-xs-4">
             <div class="dataTables_info">
                 <span class="disabled">共<em>{{pageData.total}}</em>条</span> 
@@ -60,7 +64,49 @@
 			}
 		},
 		computed:{
+            decoratePageData(){
+                var pageIndex = parseInt(this.pageData.pageIndex);
+                var pageSize = this.pageData.pageSize;
+                var total = this.pageData.total;
+                // start fix
+                var totalPage = parseInt(total/pageSize);
+                if(total%pageSize>0){
+                    totalPage = totalPage + 1;
+                }
+                var pageLinkNumber = 6;
+                if(totalPage<pageLinkNumber){
+                    pageLinkNumber = totalPage;
+                }
 
+                var isOdd = pageLinkNumber%2==0;
+                var val = parseInt(pageLinkNumber/2);
+                var beginIndex = pageIndex - (isOdd?val-1:val);
+                var endIndex = pageIndex + val;
+                if(beginIndex<1){
+                    beginIndex = 1;
+                    endIndex = pageLinkNumber;
+                }
+                if(endIndex>totalPage){
+                    endIndex = totalPage;
+                    beginIndex = endIndex - pageLinkNumber + 1;
+                }
+
+                var first = pageIndex==1;
+                var last = pageIndex==totalPage;
+
+                var linkNumbers = [];
+
+                this.pageData.totalPage = totalPage;
+                this.pageData.first = first;
+                this.pageData.last = last;
+                for (var i = beginIndex; i <= endIndex; i++) {
+                    linkNumbers.push(i);
+                }
+                this.pageData.linkNumbers = linkNumbers;
+                this.pageData.preIndex = pageIndex-1;
+                this.pageData.nextIndex = pageIndex+1;
+                console.log(this.pageData);
+            }
 		}
 	}
 </script>
