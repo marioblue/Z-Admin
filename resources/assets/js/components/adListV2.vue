@@ -114,7 +114,6 @@
                 .then(function (response) {
                     that.pageData = response.data.data;
                     that.adList = that.pageData.list;
-                    // adminHelper.setPagination(that.pageData);
                 })
                 .catch(function (error) {
                     console.log(error);

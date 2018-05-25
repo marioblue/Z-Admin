@@ -181,6 +181,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <pagination v-bind:pageData="pageData" @pageQuery="pageQuery"></pagination>
                                 </div>
                                 
                             </div>
@@ -234,7 +235,6 @@
             .then(function (response) {
                 that.pageData = response.data.data;
                 that.adList = that.pageData.list;
-                adminHelper.setPagination(that.pageData);
             })
             .catch(function (error) {
                 console.log(error);

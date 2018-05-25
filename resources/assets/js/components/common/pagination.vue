@@ -2,7 +2,7 @@
         
 	<div class="row" v-if="pageData && pageData.totalPage>0">
         <div class="hide" data-opt="for fun" v-show="decoratePageData">
-            <span>opp</span>
+            <span>计算分页中...</span>
         </div>
         <div class="col-xs-4">
             <div class="dataTables_info">
@@ -105,7 +105,6 @@
                 this.pageData.linkNumbers = linkNumbers;
                 this.pageData.preIndex = pageIndex-1;
                 this.pageData.nextIndex = pageIndex+1;
-                console.log(this.pageData);
             }
 		}
 	}
