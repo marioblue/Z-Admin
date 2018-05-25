@@ -58,47 +58,5 @@ if (token) {
 
 // 项目代码
 window.adminHelper = {
-	// 分页
-	setPagination:function(pageData){
-		var pageIndex = parseInt(pageData.pageIndex);
-		var pageSize = pageData.pageSize;
-		var total = pageData.total;
-		// start fix
-		var totalPage = parseInt(total/pageSize);
-		if(total%pageSize>0){
-			totalPage = totalPage + 1;
-		}
-		var pageLinkNumber = 6;
-		if(totalPage<pageLinkNumber){
-			pageLinkNumber = totalPage;
-		}
-
-		var isOdd = pageLinkNumber%2==0;
-		var val = parseInt(pageLinkNumber/2);
-		var beginIndex = pageIndex - (isOdd?val-1:val);
-		var endIndex = pageIndex + val;
-		if(beginIndex<1){
-			beginIndex = 1;
-			endIndex = pageLinkNumber;
-		}
-		if(endIndex>totalPage){
-			endIndex = totalPage;
-			beginIndex = endIndex - pageLinkNumber + 1;
-		}
-
-		var first = pageIndex==1;
-		var last = pageIndex==totalPage;
-
-		var linkNumbers = [];
-
-		pageData.totalPage = totalPage;
-		pageData.first = first;
-		pageData.last = last;
-		for (var i = beginIndex; i <= endIndex; i++) {
-			linkNumbers.push(i);
-		}
-		pageData.linkNumbers = linkNumbers;
-		pageData.preIndex = pageIndex-1;
-		pageData.nextIndex = pageIndex+1;
-	}
+	// TODO
 }

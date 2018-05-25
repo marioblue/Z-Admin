@@ -88,7 +88,7 @@
 </template>
 
 <script>
-    import pagination from './common/pagination.vue';
+    import pagination from 'z-admin-pagination';
     export default {
         components: {pagination},
         data(){

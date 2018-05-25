@@ -2,11 +2,11 @@
         
 	<div class="row" v-if="pageData && pageData.totalPage>0">
         <div class="hide" data-opt="for fun" v-show="decoratePageData">
-            <span>计算分页中...</span>
+            <span>本地pagination计算分页中...</span>
         </div>
         <div class="col-xs-4">
             <div class="dataTables_info">
-                <span class="disabled">共<em>{{pageData.total}}</em>条</span> 
+                <span class="disabled" style="color: #6FB3E0;padding-left: 10px;">共<em>{{pageData.total}}</em>条</span> 
             </div>
         </div>
         <div class="col-xs-8">
