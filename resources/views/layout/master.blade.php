@@ -3,10 +3,11 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <meta charset="utf-8"/>
-    <title>Tables - Ace Admin</title>
+    <title>Ace + laravel Admin demo</title>
 
-    <meta name="description" content="Static &amp; Dynamic Tables"/>
+    <meta name="description" content="Ace Admin demo"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <link rel="shortcut icon" href="z.ico" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- bootstrap & fontawesome -->
     <link rel="stylesheet" href="/ace/assets/css/bootstrap.min.css"/>
