@@ -19,6 +19,6 @@
     },
     "dependencies": {
         "vue-router": "^3.0.1",
-        "z-admin-pagination": "^1.0.0"
+        "z-admin-pagination": "^1.0.3"
     }
 }
